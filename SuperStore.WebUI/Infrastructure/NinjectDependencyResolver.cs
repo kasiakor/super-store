@@ -1,7 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Web.Mvc;
+using Moq;
 using Ninject;
+using SuperStore.Domain.Abstract;
+using SuperStore.Domain.Entities;
 
 namespace SuperStore.WebUI.Infrastructure
 {
@@ -30,6 +33,14 @@ namespace SuperStore.WebUI.Infrastructure
         private void AddBindings()
         {
             // put bindings here
+            Mock<IProductRepository> mock = new Mock<IProductRepository>();
+            mock.Setup(m => m.Products).Returns(new List<Product> {
+            new Product { Name = "Milk", Price = 2 },
+            new Product { Name = "Cocoa", Price = 7 },
+            new Product { Name = "Sugar", Price = 3 }
+            });
+
+            kernel.Bind<IProductRepository>().ToConstant(mock.Object);
         }
     }
 }
