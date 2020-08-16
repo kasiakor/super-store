@@ -6,7 +6,7 @@ using System.Web.Mvc;
 using SuperStore.Domain.Abstract;
 using SuperStore.Domain.Entities;
 
-namespace SportsStore.WebUI.Controllers
+namespace SuperStore.WebUI.Controllers
 {
 
     public class ProductController : Controller
