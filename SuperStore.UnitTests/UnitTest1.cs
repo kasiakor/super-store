@@ -18,6 +18,7 @@ namespace SuperStore.UnitTests
         {
 
             // Arrange
+            //mock repository
             Mock<IProductRepository> mock = new Mock<IProductRepository>();
             mock.Setup(m => m.Products).Returns(new Product[] {
             new Product {ProductID = 1, Name = " P1"},
@@ -26,11 +27,12 @@ namespace SuperStore.UnitTests
             new Product {ProductID = 4, Name = "P4"},
             new Product {ProductID = 5, Name = "P5"}
 });
-
+            //mock repository injected to the constructor of the class
             ProductController controller = new ProductController(mock.Object);
             controller.PageSize = 3;
 
             // Act
+            //we call List method to request a specific page
             IEnumerable<Product> result = (IEnumerable<Product>)controller.List(2).Model;
 
             // Assert
