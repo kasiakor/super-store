@@ -34,6 +34,7 @@ namespace SuperStore.WebUI.Controllers
                     TotalItems = repository.Products.Count()
                 }
             };
+            //sequence of product objects passed to the view
             return View(model);
         }
     }
