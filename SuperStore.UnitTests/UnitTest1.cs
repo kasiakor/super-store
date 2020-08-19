@@ -38,7 +38,8 @@ namespace SuperStore.UnitTests
             // Act
             //we call List method to request a specific page
             //IEnumerable<Product> result = (IEnumerable<Product>)controller.List(2).Model;
-            ProductsListViewModel result = (ProductsListViewModel)controller.List(2).Model;
+            //ProductsListViewModel result = (ProductsListViewModel)controller.List(2).Model;
+            ProductsListViewModel result = (ProductsListViewModel)controller.List(null, 2).Model;
 
 
             // Assert
@@ -96,7 +97,8 @@ namespace SuperStore.UnitTests
             controller.PageSize = 3;
 
             // Act
-            ProductsListViewModel result = (ProductsListViewModel)controller.List(1).Model;
+            //ProductsListViewModel result = (ProductsListViewModel)controller.List(1).Model;
+            ProductsListViewModel result = (ProductsListViewModel)controller.List(null, 1).Model;
 
             // Assert
             PagingInfo pageInfo = result.PagingInfo;
