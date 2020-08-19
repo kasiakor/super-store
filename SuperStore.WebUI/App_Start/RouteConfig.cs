@@ -13,11 +13,35 @@ namespace SuperStore.WebUI
         {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
+            //shows all categories - /
             routes.MapRoute(
-             name: null,
-             url: "Page{page}",
-             defaults: new { controller = "Product", action = "List" }
-         );
+                name: null,
+                url: "",
+                defaults: new { controller = "Product", action = "List", category = (string)null, page = 1 }
+             );
+
+            //shows all categories - /Page2
+            routes.MapRoute(
+                name: null,
+                url: "Page{page}",
+                defaults: new { controller = "Product", action = "List", category = (string)null },
+                new {page = @"\d+" }
+            );
+
+            //shows all categories - /Soccer
+            routes.MapRoute(
+                name: null,
+                url: "{category}",
+                defaults: new { controller = "Product", action = "List" , page = 1 }
+            );
+
+            //shows all categories - /Soccer/Page2
+            routes.MapRoute(
+                name: null,
+                url: "{category}/Page{page}",
+                defaults: new { controller = "Product", action = "List" },
+                new { page = @"\d+" }
+            );
 
             routes.MapRoute(
                 name: "Default",
