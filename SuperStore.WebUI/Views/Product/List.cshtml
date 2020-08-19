@@ -8,8 +8,9 @@
 {
     @Html.Partial("ProductSummary", p)
 }
-
-<div class="pager">
-    @Html.PageLinks(Model.PagingInfo, x => Url.Action("List", "Product", new { page = x }))
-</div>
+@*public static MvcHtmlString PageLinks(this HtmlHelper html, PagingInfo pagingInfo, Func<int, string>
+    pageUrl)*@
+    <div class="pager">
+        @Html.PageLinks(Model.PagingInfo, x => Url.Action("List", "Product", new { page = x, category = Model.CurrentCategory }))
+    </div>
 
