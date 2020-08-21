@@ -132,5 +132,40 @@ namespace SuperStore.UnitTests
             // Assert
             Assert.AreEqual(categoryToSelect, result);
         }
+
+        [TestMethod]
+        public void Generate_Category_Specific_Product_Count()
+        {
+
+            // Arrange
+            //mock repository
+            Mock<IProductRepository> mock = new Mock<IProductRepository>();
+            mock.Setup(m => m.Products).Returns(new Product[] {
+            new Product {ProductID = 1, Name = " P1", Category = "Shoes"},
+            new Product {ProductID = 2, Name = "P2", Category = "Tops"},
+            new Product {ProductID = 3, Name = " P1", Category = "Shoes"},
+            new Product {ProductID = 4, Name = "P2", Category = "Tops"},
+            new Product {ProductID = 5, Name = " P1", Category = "Shoes"},
+            new Product {ProductID = 6, Name = "P2", Category = "Tops"},
+            new Product {ProductID = 7, Name = "P2", Category = "Tops"}
+            });
+            //mock repository injected to the constructor of the class
+            //create the controller
+            ProductController controller = new ProductController(mock.Object);
+
+            //define the category to be selected`1
+            string categoryToSelect1 = "Shoes";
+            string categoryToSelect2 = "Tops";
+
+            // Act
+            int result1 =((ProductsListViewModel)controller.List(categoryToSelect1).Model).PagingInfo.TotalItems;
+            int result2 = ((ProductsListViewModel)controller.List(categoryToSelect2).Model).PagingInfo.TotalItems;
+            int result3 = ((ProductsListViewModel)controller.List(null).Model).PagingInfo.TotalItems;
+
+            // Assert
+            Assert.AreEqual(result1, 3);
+            Assert.AreEqual(result2, 4);
+            Assert.AreEqual(result3, 7);
+        }
     }
 }
