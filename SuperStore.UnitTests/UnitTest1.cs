@@ -107,5 +107,30 @@ namespace SuperStore.UnitTests
             Assert.AreEqual(pageInfo.TotalItems, 5);
             Assert.AreEqual(pageInfo.TotalPages, 2);
         }
+
+        [TestMethod]
+        public void Indicates_Selected_Category()
+        {
+
+            // Arrange
+            //mock repository
+            Mock<IProductRepository> mock = new Mock<IProductRepository>();
+            mock.Setup(m => m.Products).Returns(new Product[] {
+            new Product {ProductID = 1, Name = " P1", Category = "Shoes"},
+            new Product {ProductID = 2, Name = "P2", Category = "Tops"}
+            });
+            //mock repository injected to the constructor of the class
+            //create the controller
+            NavController target = new NavController(mock.Object);
+
+            //define the category to be selected`1
+            string categoryToSelect = "Shoes";
+
+            // Act
+            string result = target.Menu(categoryToSelect).ViewBag.SelectedCategory;
+
+            // Assert
+            Assert.AreEqual(categoryToSelect, result);
+        }
     }
 }
