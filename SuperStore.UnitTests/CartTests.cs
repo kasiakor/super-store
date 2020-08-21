@@ -61,5 +61,30 @@ namespace SuperStore.UnitTests
             Assert.AreEqual(target.Lines.Where(c => c.Product == p3).Count(), 0);
             Assert.AreEqual(target.Lines.Count(), 2);
         }
+
+        [TestMethod]
+        public void Calculate_Cart_Total()
+        {
+
+            // Arrange - create some test products
+            Product p1 = new Product { ProductID = 1, Name = "P1", Price = 2.00M };
+            Product p2 = new Product { ProductID = 2, Name = "P2", Price = 3.00M };
+            Product p3 = new Product { ProductID = 3, Name = "P3", Price = 4.00M };
+
+            // Arrange - create a new cart
+            Cart target = new Cart();
+            // Arrange - add some products to the cart
+            target.AddItem(p1, 1);
+            target.AddItem(p2, 1);
+            target.AddItem(p3, 1);
+            target.AddItem(p1, 2);
+
+            // Act
+            //  public decimal ComputeTotalValue(){return lineCollection.Sum(e => e.Product.Price * e.Quantity);}
+            target.ComputeTotalValue();
+
+            // Assert
+            Assert.AreEqual(target.Lines.Sum(e => e.Product.Price * e.Quantity), 13);
+        }
     }
 }
