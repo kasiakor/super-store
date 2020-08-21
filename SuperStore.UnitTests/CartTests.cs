@@ -35,5 +35,31 @@ namespace SuperStore.UnitTests
             Assert.AreEqual(results[0].Quantity, 1);
             Assert.AreEqual(results[1].Quantity, 1);
         }
+
+        [TestMethod]
+        public void Can_Remove_Line()
+        {
+
+            // Arrange - create some test products
+            Product p1 = new Product { ProductID = 1, Name = "P1" };
+            Product p2 = new Product { ProductID = 2, Name = "P2" };
+            Product p3 = new Product { ProductID = 3, Name = "P3" };
+
+            // Arrange - create a new cart
+            Cart target = new Cart();
+            // Arrange - add some products to the cart
+            target.AddItem(p1, 1);
+            target.AddItem(p2, 3);
+            target.AddItem(p3, 5);
+            target.AddItem(p3, 1);
+
+            // Act
+            // public void RemoveLine(Product product){lineCollection.RemoveAll(l => l.Product.ProductID == product.ProductID);}
+            target.RemoveLine(p3);
+
+            // Assert
+            Assert.AreEqual(target.Lines.Where(c => c.Product == p3).Count(), 0);
+            Assert.AreEqual(target.Lines.Count(), 2);
+        }
     }
 }
