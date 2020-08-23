@@ -9,12 +9,13 @@
         @using (Html.BeginForm("AddToCart", "Cart"))
         {
     <div class="pull-right">
+        @*allows the helper to derive the appropriate "name" attribute for the form-input control based on the property you specify in the lambda*@
         @*<input type="hidden" name="ProductID" value="1" />*@
         @Html.HiddenFor(x => x.ProductID)
 
-        @*<input type="hidden" name="returnUrl" value" /" />*@
+        @*<input type="hidden" name="returnUrl" value="/" />*@
         @*Request.Url.PathAndQuery property returns absolute path of request with query parameters.
-            if you came to AddToCart view from Index view then returnUrl will be "/", because the Index view is a root of the webapp*@
+        if you came to AddToCart view from Index view then returnUrl will be "/", because the Index view is a root of the webapp*@
         @Html.Hidden("returnUrl", Request.Url.PathAndQuery)
         <input type="submit" class="btn btn-success" value="Add to cart" />
     </div>
