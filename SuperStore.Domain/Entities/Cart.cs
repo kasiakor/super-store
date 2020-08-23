@@ -1,8 +1,7 @@
-﻿using SuperStore.Domain.Entities;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 
-namespace SportsStore.Domain.Entities
+namespace SuperStore.Domain.Entities
 {
 
     public class Cart
