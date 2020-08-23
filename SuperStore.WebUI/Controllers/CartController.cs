@@ -2,8 +2,9 @@
 using System.Web.Mvc;
 using SuperStore.Domain.Entities;
 using SuperStore.Domain.Abstract;
+using SuperStore.WebUI.Models;
 
-namespace SportsStore.WebUI.Controllers
+namespace SuperStore.WebUI.Controllers
 {
 
     public class CartController : Controller
@@ -13,6 +14,15 @@ namespace SportsStore.WebUI.Controllers
         public CartController(IProductRepository repo)
         {
             repository = repo;
+        }
+
+        public ViewResult Index(string returnUrl)
+        {
+            return View(new CartIndexViewModel
+            {
+                Cart = GetCart(),
+                ReturnUrl = returnUrl
+            });
         }
         //parameters match input elements in the html form
         public RedirectToRouteResult AddToCart(int productId, string returnUrl)

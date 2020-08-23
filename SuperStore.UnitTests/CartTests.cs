@@ -1,6 +1,5 @@
 ﻿using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using SportsStore.Domain.Entities;
 using SuperStore.Domain.Entities;
 
 namespace SuperStore.UnitTests
