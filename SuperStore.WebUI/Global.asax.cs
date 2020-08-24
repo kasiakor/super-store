@@ -1,7 +1,5 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+using SuperStore.Domain.Entities;
+using SuperStore.WebUI.Infrastructure.Binders;
 using System.Web.Mvc;
 using System.Web.Routing;
 
@@ -13,6 +11,8 @@ namespace SuperStore.WebUI
         {
             AreaRegistration.RegisterAllAreas();
             RouteConfig.RegisterRoutes(RouteTable.Routes);
+            //we tell Mvc Framework to use the CartModelBinder to create instances of Cart
+            ModelBinders.Binders.Add(typeof(Cart), new CartModelBinder());
         }
     }
 }
