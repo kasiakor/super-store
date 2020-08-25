@@ -6,6 +6,7 @@ using Moq;
 using SuperStore.Domain.Abstract;
 using SuperStore.Domain.Entities;
 using SuperStore.WebUI.Controllers;
+using SuperStore.WebUI.Models;
 
 namespace SuperStore.UnitTests
 {
@@ -187,6 +188,27 @@ namespace SuperStore.UnitTests
 
             Trace.WriteLine(result);
             //System.Web.Mvc.RedirectToRouteResult
+        }
+        [TestMethod]
+        public void Can_View_Cart_Contents()
+        {
+            // Arrange - create a Cart
+            Cart cart = new Cart();
+
+            // Arrange - create the controller
+            CartController target = new CartController(null);
+
+            // Act - call the Index action method
+           // public ViewResult Index(Cart cart, string returnUrl)
+           //public class CartIndexViewModel{public Cart Cart { get; set; }public string ReturnUrl { get; set; }}
+            CartIndexViewModel result = (CartIndexViewModel)target.Index(cart, "myUrl").ViewData.Model;
+
+            // Assert
+            Assert.AreSame(result.Cart, cart);
+            Assert.AreEqual(result.ReturnUrl, "myUrl");
+
+            Trace.WriteLine(result);
+            //SuperStore.WebUI.Models.CartIndexViewModel
         }
     }
 }
