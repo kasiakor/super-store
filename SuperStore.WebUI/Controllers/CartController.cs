@@ -56,6 +56,11 @@ namespace SuperStore.WebUI.Controllers
             return RedirectToAction("Index", new { returnUrl });
         }
 
+        public PartialViewResult Summary(Cart cart)
+        {
+            return PartialView(cart);
+        }
+
 
         ////removed for model binding!!!
         ////we use session state feature - GetCart() - to store and retrieve cart objects. It uses cookies or Url rewriting to associate multiple requests to form a single browsing session/cart persistent between requests
