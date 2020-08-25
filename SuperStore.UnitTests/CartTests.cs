@@ -1,6 +1,10 @@
-﻿using System.Linq;
+﻿using System.Diagnostics;
+using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Moq;
+using SuperStore.Domain.Abstract;
 using SuperStore.Domain.Entities;
+using SuperStore.WebUI.Controllers;
 
 namespace SuperStore.UnitTests
 {
@@ -109,6 +113,51 @@ namespace SuperStore.UnitTests
 
             // Assert
             Assert.AreEqual(target.Lines.Count(), 0);
+        }
+
+        [TestMethod]
+        public void Can_Add_To_Cart()
+        {
+
+            // Arrange - create the mock repository
+            Mock<IProductRepository> mock = new Mock<IProductRepository>();
+            mock.Setup(m => m.Products).Returns(new Product[] {
+                new Product {ProductID = 1, Name = "P1", Category = "Apples"},
+                new Product {ProductID = 2, Name = "P2", Category = "Oranges"},
+            }.AsQueryable());
+
+            // Arrange - create a Cart
+            Cart cart = new Cart();
+
+            // Arrange - create the controller
+            CartController target = new CartController(mock.Object);
+
+            // Act - add a product to the cart
+            //public RedirectToRouteResult AddToCart(Cart cart, int productId, string returnUrl)
+            target.AddToCart(cart, 1, null);
+            target.AddToCart(cart, 2, null);
+
+            // Assert
+            Assert.AreEqual(cart.Lines.Count(), 2);
+            Assert.AreEqual(cart.Lines.ToArray()[1].Product.ProductID, 2);
+                 
+            Trace.WriteLine(cart.Lines);
+            //System.Collections.Generic.List`1[SuperStore.Domain.Entities.CartLine]
+
+            Trace.WriteLine(cart.Lines.Count());
+            //2
+
+            Trace.WriteLine(cart.Lines.ToArray());
+            //SuperStore.Domain.Entities.CartLine[]
+
+            Trace.WriteLine(cart.Lines.ToArray()[1]);
+            //SuperStore.Domain.Entities.CartLine
+
+            Trace.WriteLine(cart.Lines.ToArray()[1].Product);
+            //SuperStore.Domain.Entities.Product
+
+            Trace.WriteLine(cart.Lines.ToArray()[1].Product.ProductID);
+            //2
         }
     }
 }
