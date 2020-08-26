@@ -61,7 +61,11 @@ namespace SuperStore.WebUI.Controllers
             return PartialView(cart);
         }
 
-
+        public ViewResult Checkout()
+        {
+            //it returns default view and passes shipping details object as view model to the view
+            return View(new ShippingDetails());
+        }
         ////removed for model binding!!!
         ////we use session state feature - GetCart() - to store and retrieve cart objects. It uses cookies or Url rewriting to associate multiple requests to form a single browsing session/cart persistent between requests
         //private Cart GetCart()
