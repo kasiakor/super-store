@@ -4,7 +4,7 @@ using System.Net.Mail;
 using SuperStore.Domain.Abstract;
 using SuperStore.Domain.Entities;
 
-namespace SportsStore.Domain.Concrete
+namespace SuperStore.Domain.Concrete
 {
 
     public class EmailSettings

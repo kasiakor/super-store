@@ -1,11 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Web.Mvc;
-using Moq;
 using Ninject;
 using SuperStore.Domain.Abstract;
 using SuperStore.Domain.Concrete;
-using SuperStore.Domain.Entities;
 
 namespace SuperStore.WebUI.Infrastructure
 {
@@ -46,6 +45,16 @@ namespace SuperStore.WebUI.Infrastructure
             //use real repository, add binding
             //It tells Ninject to create instances of the EFProductRepository class to service requests for the IProductRepository interface
             kernel.Bind<IProductRepository>().To<EFProductRepository>();
+
+            //instance of this class is demanded by the EmailOrderProcessor constructor
+            EmailSettings emailSettings = new EmailSettings
+            {
+                WriteAsFile = bool.Parse(ConfigurationManager
+                   .AppSettings["Email.WriteAsFile"] ?? "false")
+            };
+
+            kernel.Bind<IOrderProcessor>().To<EmailOrderProcessor>()
+                .WithConstructorArgument("settings", emailSettings);
         }
     }
 }
