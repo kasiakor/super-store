@@ -10,10 +10,13 @@ namespace SuperStore.WebUI.Controllers
     public class CartController : Controller
     {
         private IProductRepository repository;
+        private IOrderProcessor orderProcessor;
 
-        public CartController(IProductRepository repo)
+        public CartController(IProductRepository repo, IOrderProcessor proc)
         {
             repository = repo;
+            orderProcessor = proc;
+
         }
 
         //public ViewResult Index(string returnUrl)
@@ -66,6 +69,37 @@ namespace SuperStore.WebUI.Controllers
             //it returns default view and passes shipping details object as view model to the view
             return View(new ShippingDetails());
         }
+
+        //IOrderProcessor - void ProcessOrder(Cart cart, ShippingDetails shippingDetails);
+
+        [HttpPost]
+        public ViewResult Checkout(Cart cart, ShippingDetails shippingDetails)
+        {
+            if (cart.Lines.Count() == 0)
+            {
+                ModelState.AddModelError("ErrorMessage", "Sorry, your cart is empty!");
+            }
+
+            if (ModelState.IsValid)
+            {
+                orderProcessor.ProcessOrder(cart, shippingDetails);
+                cart.Clear();
+                return View("Completed");
+            }
+            else
+            {
+                return View(shippingDetails);
+            }
+        }
+
+
+
+
+
+
+
+
+
         ////removed for model binding!!!
         ////we use session state feature - GetCart() - to store and retrieve cart objects. It uses cookies or Url rewriting to associate multiple requests to form a single browsing session/cart persistent between requests
         //private Cart GetCart()
