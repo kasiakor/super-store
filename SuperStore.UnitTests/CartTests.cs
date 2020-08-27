@@ -274,10 +274,6 @@ namespace SuperStore.UnitTests
             // Assert - check that I am passing an invalid model to the view
             Assert.AreEqual(false, result.ViewData.ModelState.IsValid);
 
-
-            
-
-
             Trace.WriteLine(result.ViewData.ModelState["error"]);
             //System.Web.Mvc.ModelState
 
@@ -286,6 +282,32 @@ namespace SuperStore.UnitTests
 
             Trace.WriteLine(result.ViewData.ModelState["error"].Errors[0].ErrorMessage);
             //error msg to display
+        }
+
+        [TestMethod]
+        public void Can_Checkout_And_Submit_Order()
+        {
+            // Arrange - create a mock order processor
+            Mock<IOrderProcessor> mock = new Mock<IOrderProcessor>();
+            // Arrange - create a cart with an item
+            Cart cart = new Cart();
+            cart.AddItem(new Product(), 1);
+            // Arrange - create an instance of the controller
+            CartController target = new CartController(null, mock.Object);
+
+            // Act - try to checkout
+            ViewResult result = target.Checkout(cart, new ShippingDetails());
+
+            // Assert - check that the order has been passed on to the processor
+            mock.Verify(m => m.ProcessOrder(It.IsAny<Cart>(), It.IsAny<ShippingDetails>()),
+                Times.Once());
+            // Assert - check that the method is returning the Completed view
+            //public ViewResult Checkout(Cart cart, ShippingDetails shippingDetails) // if (ModelState.IsValid) return View("Completed");
+            Assert.AreEqual("Completed", result.ViewName);
+            // Assert - check that I am passing a valid model to the view
+            Assert.AreEqual(true, result.ViewData.ModelState.IsValid);
+
+            Trace.WriteLine(result.ViewName);
         }
     }
 }
