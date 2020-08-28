@@ -19,12 +19,14 @@ namespace SuperStore.WebUI.Controllers
             }
 
         //the value for category will be provided automaticaly by the routing configuration
-        public PartialViewResult Menu(string category = null)
+        //public PartialViewResult Menu(string category = null) add horizontal menu option
+        public PartialViewResult Menu(string category = null, bool horizontalMenu = false)
         {
             ViewBag.SelectedCategory = category;
             IEnumerable<string> categories = repository.Products.Select(x => x.Category).Distinct().OrderBy(x => x);
-     
-            return PartialView(categories);
+
+            string viewName = horizontalMenu ? "MenuHorizontal" : "Menu";
+            return PartialView(viewName, categories);
         }
     }
 }
