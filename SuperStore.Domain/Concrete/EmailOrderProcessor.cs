@@ -3,6 +3,7 @@ using System.Net;
 using System.Net.Mail;
 using SuperStore.Domain.Abstract;
 using SuperStore.Domain.Entities;
+using System;
 
 namespace SuperStore.Domain.Concrete
 {
@@ -58,14 +59,15 @@ namespace SuperStore.Domain.Concrete
 
                 foreach (var line in cart.Lines)
                 {
+                   
                     var subtotal = line.Product.Price * line.Quantity;
-                    body.AppendFormat("{0} x {1} (subtotal: {2:c}", line.Quantity,
-                                      line.Product.Name,
-                                      subtotal);
+                    //var val = Convert.ToInt32(costs[i]);
+                    //costs[i] = String.Format("Value is: {0:C}", val);
+                    body.AppendFormat("{0} x {1}. " + String.Format("Subtotal:  {0:C} \n", Convert.ToDecimal(subtotal)), line.Quantity,
+                                      line.Product.Name);
                 }
 
-                body.AppendFormat("Total order value: {0:c}", cart.ComputeTotalValue())
-                    .AppendLine("---")
+                body.AppendFormat("Total order value: {0:c} \n", cart.ComputeTotalValue().ToString())
                     .AppendLine("Ship to:")
                     .AppendLine(shippingInfo.Name)
                     .AppendLine(shippingInfo.Line1)
