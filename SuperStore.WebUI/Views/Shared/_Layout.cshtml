@@ -12,16 +12,19 @@
 <body>
     <div class="navbar navbar-inverse" role="navigation">
         <a class="navbar-brand" href="#">
-        <span class="hidden-xs">SUPER STORE</span>
+            <span class="hidden-xs">SUPER STORE</span>
             <div class="visible-xs">SUPER</div>
             <div class="visible-xs">STORE</div>
         </a>
         @Html.Action("Summary", "Cart")
     </div>
+    <div class="visible-xs">
+        @Html.Action("Menu", "Nav", new { horizontalMenu = true })
+    </div>
     <div class="row panel">
         <div id="categories" class="col-sm-3 hidden-xs">
             @*child action*@
-            @Html.Action("Menu","Nav", new {horizontalMenu = true })
+            @Html.Action("Menu", "Nav")
         </div>
         <div class="col-xs-12 col-sm-8">
             @RenderBody()
