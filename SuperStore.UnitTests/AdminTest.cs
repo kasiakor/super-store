@@ -74,5 +74,30 @@ namespace SuperStore.UnitTests
             Trace.WriteLine(p1.ProductID);
             //1
         }
+              [TestMethod]
+        public void Cannot_Edit_Nonexistent_Product()
+        {
+
+            // Arrange - create the mock repository
+            Mock<IProductRepository> mock = new Mock<IProductRepository>();
+            mock.Setup(m => m.Products).Returns(new Product[] {
+                new Product {ProductID = 1, Name = "P1"},
+                new Product {ProductID = 2, Name = "P2"},
+                new Product {ProductID = 3, Name = "P3"},
+            });
+
+            // Arrange - create the controller
+            AdminController target = new AdminController(mock.Object);
+
+            // Act
+            //public ViewResult Edit(int productId)
+           // Product p4 = target.Edit(4).ViewData.Model as Product;
+            Product p4 = (Product)target.Edit(4).ViewData.Model;
+
+            // Assert
+            Assert.IsNull( p4);
+
+            Trace.WriteLine(p4);
+        }
     }
 }
