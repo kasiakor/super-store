@@ -23,7 +23,7 @@
             <tr>
                 <td class="text-left">@item.ProductID</td>
                 <td class="text-left">
-                    @Html.ActionLink(item.Name, "Edit", "Admin", new { item.ProductID})
+                    @Html.ActionLink(item.Name, "Edit", new { item.ProductID})
                </td>
                 <td class="text-left">@item.Price.ToString("c")</td>
                 <td class="text-center">

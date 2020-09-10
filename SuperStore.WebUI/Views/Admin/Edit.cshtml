@@ -1,0 +1,21 @@
+﻿@model SuperStore.Domain.Entities.Product
+@{
+    if (Model != null)
+    {
+        ViewBag.Title = "Admin: Edit " + @Model.Name;
+    }
+
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+
+    <h1>Edit @Model.Name</h1>
+
+
+@using (Html.BeginForm())
+{
+    //generates the view after inspecting the model type - Product class
+    @Html.EditorForModel()
+    <input type="submit" value="Save" />
+    @Html.ActionLink("Cancel and return to List", "Index")
+}
