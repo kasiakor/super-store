@@ -8,14 +8,65 @@
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 
+<div class="panel">
+    <div class="panel-heading">
+        <h1>Edit: @Model.Name</h1>
+    </div>
 
-    <h1>Edit @Model.Name</h1>
+    @using (Html.BeginForm())
+    {
+        <div class="panel-body">
+            @Html.HiddenFor(m => m.ProductID)
 
+            @foreach (var property in ViewData.ModelMetadata.Properties)
+            {
+                //<h1>@property.PropertyName</h1>
+                if (property.PropertyName != "ProductID")
+                {
+                    <div class="form-group">
+                        <label>@(property.DisplayName ?? property.PropertyName)</label>
+                        @if (property.PropertyName == "Description")
+                        {
+                            //textarea
+                            @Html.TextArea(property.PropertyName, null, new { @class = "form-control", rows = 5 })
+                        }
+                        else
+                        {
+                            //input
+                            @Html.TextBox(property.PropertyName, null, new { @class = "form-control" })
+                        }
+                    </div>
 
-@using (Html.BeginForm())
-{
-    //generates the view after inspecting the model type - Product class
-    @Html.EditorForModel()
-    <input type="submit" value="Save" />
-    @Html.ActionLink("Cancel and return to List", "Index")
-}
+                }
+            }
+        </div>
+        //generates the view after inspecting the model type - Product class
+        //@Html.EditorForModel()
+
+        <div class="panel-footer">
+            <input type="submit" value="Save" />
+            @Html.ActionLink("Cancel and return to List", "Index")
+        </div>
+    }
+</div>
+
+@*<div class="panel-body">
+    <input data-val="true" data-val-number="The field ProductID must be a number." data-val-required="The ProductID field is required." id="ProductID" name="ProductID" type="hidden" value="3">
+
+    <div class="form-group">
+        <label>Name</label>
+        <input class="form-control" id="Name" name="Name" type="text" value="Lifejacket">
+    </div>
+    <div class="form-group">
+        <label>Description</label>
+<textarea class="form-control" cols="20" id="Description" name="Description" rows="5">Protective and fashionable</textarea>
+    </div>
+    <div class="form-group">
+        <label>Price</label>
+        <input class="form-control" data-val="true" data-val-number="The field Price must be a number." data-val-required="The Price field is required." id="Price" name="Price" type="text" value="48.95">
+    </div>
+    <div class="form-group">
+        <label>Category</label>
+        <input class="form-control" id="Category" name="Category" type="text" value="Watersports">
+    </div>
+</div>*@
