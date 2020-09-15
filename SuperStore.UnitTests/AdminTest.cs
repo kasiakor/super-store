@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Web.Mvc;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using SuperStore.Domain.Abstract;
@@ -98,6 +99,43 @@ namespace SuperStore.UnitTests
             Assert.IsNull( p4);
 
             Trace.WriteLine(p4);
+        }
+
+        [TestMethod]
+        public void Can_Save_Valid_Changes()
+        {
+
+            // Arrange - create mock repository
+            Mock<IProductRepository> mock = new Mock<IProductRepository>();
+            // Arrange - create the controller
+            AdminController target = new AdminController(mock.Object);
+            // Arrange - create a product
+            Product product = new Product { Name = "Test" };
+
+            // Act - try to save the product
+            //ActionResult represents the result of the action method 
+            ActionResult result = target.Edit(product);
+
+            // Assert - check that the repository was called
+            //verifies that a specific invocation was performed on mock
+            mock.Verify(m => m.SaveProduct(product));
+            // Assert - check the method result type
+            Assert.IsNotInstanceOfType(result, typeof(ViewResult));
+
+            Trace.WriteLine(product);
+            //SuperStore.Domain.Entities.Product
+
+            Trace.WriteLine(product.Name);
+            //Test
+
+            Trace.WriteLine(product.Description);
+            // empty " "
+
+            Trace.WriteLine(result);
+            //System.Web.Mvc.RedirectToRouteResult
+
+            Trace.WriteLine(mock);
+            //Moq.Mock`1[SuperStore.Domain.Abstract.IProductRepository]
         }
     }
 }
