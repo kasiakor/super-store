@@ -137,5 +137,35 @@ namespace SuperStore.UnitTests
             Trace.WriteLine(mock);
             //Moq.Mock`1[SuperStore.Domain.Abstract.IProductRepository]
         }
+
+        [TestMethod]
+        public void Cannot_Save_Invalid_Changes()
+        {
+
+            // Arrange - create mock repository
+            Mock<IProductRepository> mock = new Mock<IProductRepository>();
+            // Arrange - create the controller
+            AdminController target = new AdminController(mock.Object);
+            // Arrange - create a product
+            Product product = new Product { Name = "Test" };
+            // Arrange - add an error to the model state
+            target.ModelState.AddModelError("error", "error001");
+
+            // Act - try to save the product
+            ActionResult result = target.Edit(product);
+
+            // Assert - check that the repository was not called
+            //we check if type Product was passed - never
+            //Times.Once()
+            mock.Verify(m => m.SaveProduct(It.IsAny<Product>()), Times.Never());
+            // Assert - check the method result type
+            Assert.IsInstanceOfType(result, typeof(ViewResult));
+
+            Trace.WriteLine(target.ModelState);
+            //System.Web.Mvc.ModelStateDictionary
+
+            Trace.WriteLine(target.ModelState["error"].Errors[0].ErrorMessage);
+            //error001
+        }
     }
 }
