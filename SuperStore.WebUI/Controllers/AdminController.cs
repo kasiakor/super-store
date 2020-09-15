@@ -26,5 +26,23 @@ namespace SuperStore.WebUI.Controllers
                 .FirstOrDefault(p => p.ProductID == productId);
             return View(product);
         }
+
+        //invoked when user click save button on edit product page
+        [HttpPost]
+        public ActionResult Edit(Product product)
+        {
+            if(ModelState.IsValid)
+            {
+                repository.SaveProduct(product);
+                TempData["message"] = string.Format("{0} has been updated", product.Name);
+                return RedirectToAction("Index");
+            }
+
+            else
+            {
+                //something went wrong
+                return View(product);
+            }
+        }
     }
 }
