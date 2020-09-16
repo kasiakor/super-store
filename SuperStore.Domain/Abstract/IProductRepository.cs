@@ -10,5 +10,7 @@ namespace SuperStore.Domain.Abstract
 
         //save changes to product from Edit method in Admin controller
         void SaveProduct (Product product);
+
+        Product DeleteProduct(int productID);
     }
 }

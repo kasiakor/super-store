@@ -50,5 +50,16 @@ namespace SuperStore.WebUI.Controllers
             //new Product object is a view model
             return View("Edit", new Product());
         }
+        [HttpPost]
+        public ActionResult Delete(int productID)
+        {
+            Product deletedProduct = repository.DeleteProduct(productID);
+            if(deletedProduct != null)
+            {
+                TempData["message"] = string.Format("{0} has been deleted", deletedProduct);
+            }
+            return RedirectToAction("Index");
+        }
+       
     }
 }
