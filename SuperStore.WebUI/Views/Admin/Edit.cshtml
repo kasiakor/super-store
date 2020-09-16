@@ -13,7 +13,7 @@
         <h1>Edit: @Model.Name</h1>
     </div>
 
-    @using (Html.BeginForm())
+    @using (Html.BeginForm("Edit", "Admin"))
     {
         <div class="panel-body">
             @Html.HiddenFor(m => m.ProductID)
@@ -50,6 +50,8 @@
     }
 </div>
 
+
+@*This is generated in the browser*@
 @*<div class="panel-body">
     <input data-val="true" data-val-number="The field ProductID must be a number." data-val-required="The ProductID field is required." id="ProductID" name="ProductID" type="hidden" value="3">
 

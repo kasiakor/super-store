@@ -44,5 +44,11 @@ namespace SuperStore.WebUI.Controllers
                 return View(product);
             }
         }
+
+        public ViewResult Create()
+        {
+            //new Product object is a view model
+            return View("Edit", new Product());
+        }
     }
 }
