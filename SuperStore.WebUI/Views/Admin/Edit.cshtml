@@ -36,7 +36,7 @@
                             @Html.TextBox(property.PropertyName, null, new { @class = "form-control" })
                         }
                     </div>
-
+                    @Html.ValidationMessage(property.PropertyName)
                 }
             }
         </div>
