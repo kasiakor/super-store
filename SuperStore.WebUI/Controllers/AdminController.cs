@@ -56,7 +56,7 @@ namespace SuperStore.WebUI.Controllers
             Product deletedProduct = repository.DeleteProduct(productID);
             if(deletedProduct != null)
             {
-                TempData["message"] = string.Format("{0} has been deleted", deletedProduct);
+                TempData["message"] = string.Format("{0} has been deleted", deletedProduct.Name);
             }
             return RedirectToAction("Index");
         }
