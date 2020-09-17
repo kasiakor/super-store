@@ -5,6 +5,8 @@ using System.Web.Mvc;
 using Ninject;
 using SuperStore.Domain.Abstract;
 using SuperStore.Domain.Concrete;
+using SuperStore.WebUI.Infrastructure.Abstract;
+using SuperStore.WebUI.Infrastructure.Concrete;
 
 namespace SuperStore.WebUI.Infrastructure
 {
@@ -55,6 +57,8 @@ namespace SuperStore.WebUI.Infrastructure
 
             kernel.Bind<IOrderProcessor>().To<EmailOrderProcessor>()
                 .WithConstructorArgument("settings", emailSettings);
+
+            kernel.Bind<IAuthProvider>().To<FormsAuthProvider>();
         }
     }
 }

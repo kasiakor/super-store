@@ -5,7 +5,8 @@ using SuperStore.Domain.Entities;
 
 namespace SuperStore.WebUI.Controllers
 {
-
+    //filter
+    [Authorize]
     public class AdminController : Controller
     {
         private IProductRepository repository;
