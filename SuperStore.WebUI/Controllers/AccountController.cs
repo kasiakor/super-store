@@ -30,6 +30,7 @@ namespace SuperStore.WebUI.Controllers
                 {
                     //url gets url helper object to generate urls
                     //Action generates qualified url to action method
+                    //redirect creates RedirectResult
                     return Redirect(returnUrl ?? Url.Action("Index", "Admin"));
                 }
                 else
