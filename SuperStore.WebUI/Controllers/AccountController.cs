@@ -35,7 +35,7 @@ namespace SuperStore.WebUI.Controllers
                 }
                 else
                 {
-                    ModelState.AddModelError("error", "Incorrect username or password");
+                    ModelState.AddModelError(" ", "Incorrect username or password");
                     return View();
                 }
             }

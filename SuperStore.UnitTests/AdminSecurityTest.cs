@@ -41,5 +41,38 @@ namespace SuperStore.UnitTests
             //System.Web.Mvc.RedirectResult
 
         }
+
+        [TestMethod]
+        public void Can_Login_With_Invalid_Credentials()
+        {
+            // Arrange - create the mock authentication provider
+            Mock<IAuthProvider> mock = new Mock<IAuthProvider>();
+            mock.Setup(m => m.Authenticate("badUser", "badPass")).Returns(false);
+
+            // Arrange - create view model object
+            LoginViewModel model = new LoginViewModel
+            {
+                UserName = "badUser",
+                Password = "badPass"
+            };
+
+            // Arrange - create the controller
+            AccountController target = new AccountController(mock.Object);
+
+            //Act - authenticate user
+            //public ActionResult Login(LoginViewModel model, string returnUrl)
+            ActionResult result = target.Login(model, "/MyURL");
+
+            // Assert
+            //ModelState.AddModelError("error", "Incorrect username or password"); return View();
+            Assert.IsInstanceOfType(result, typeof(ViewResult));
+            Assert.IsFalse(((ViewResult)result).ViewData.ModelState.IsValid);
+
+            Trace.WriteLine(result);
+            //System.Web.Mvc.ViewResult
+
+            Trace.WriteLine(target.ModelState[" "].Errors[0].ErrorMessage);
+            //Incorrect username or password
+        }
     }
 }
