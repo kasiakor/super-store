@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Web.Mvc;
 using SuperStore.Domain.Entities;
+using System.Web;
 
 namespace SuperStore.WebUI.Controllers
 {
@@ -29,11 +30,22 @@ namespace SuperStore.WebUI.Controllers
         }
 
         //invoked when user click save button on edit product page
+        //add HttpPostedFileBase class that provides access to uploaded file by a client
+        //HttpPostedFileBase properties: ContentType, ContentLength, InputStream
         [HttpPost]
-        public ActionResult Edit(Product product)
+        public ActionResult Edit(Product product, HttpPostedFileBase image = null)
         {
             if(ModelState.IsValid)
             {
+                if(image != null)
+                {
+                    //copy data from the param valuie to the product object
+                    product.ImageMimeType = image.ContentType;
+                    product.ImageData = new byte[image.ContentLength];
+                    //reads a sequence of bytes from the current stream: byte[] buffer, int offset, int count
+                    image.InputStream.Read(product.ImageData, 0, image.ContentLength);
+
+                }
                 repository.SaveProduct(product);
                 TempData["message"] = string.Format("{0} has been updated", product.Name);
                 return RedirectToAction("Index");
