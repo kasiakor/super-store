@@ -8,67 +8,103 @@
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 
-<div class="panel">
-    <div class="panel-heading">
-        <h1>Edit: @Model.Name</h1>
-    </div>
+    <div class="panel">
+        <div class="panel-heading">
+            <h1>Edit: @Model.Name</h1>
+        </div>
+        form action="/Admin/Edit" enctype="multipart/form-data" method="post"
+        @using (Html.BeginForm("Edit", "Admin"))
+        {
+            <div class="panel-body">
+                @Html.HiddenFor(m => m.ProductID)
 
-    @using (Html.BeginForm("Edit", "Admin"))
-    {
-        <div class="panel-body">
-            @Html.HiddenFor(m => m.ProductID)
-
-            @foreach (var property in ViewData.ModelMetadata.Properties)
-            {
-                //<h1>@property.PropertyName</h1>
-                if (property.PropertyName != "ProductID")
+                @foreach (var property in ViewData.ModelMetadata.Properties)
                 {
-                    <div class="form-group">
-                        <label>@(property.DisplayName ?? property.PropertyName)</label>
-                        @if (property.PropertyName == "Description")
-                        {
-                            //textarea
-                            @Html.TextArea(property.PropertyName, null, new { @class = "form-control", rows = 5 })
-                        }
-                        else
-                        {
-                            //input
-                            @Html.TextBox(property.PropertyName, null, new { @class = "form-control" })
-                        }
-                    </div>
-                    @Html.ValidationMessage(property.PropertyName)
-                }
-            }
-        </div>
-        //generates the view after inspecting the model type - Product class
-        //@Html.EditorForModel()
 
-        <div class="panel-footer">
-            <input type="submit" value="Save" class="btn btn-primary"/>
-            @Html.ActionLink("Cancel and return to List", "Index", null, new { @class="btn btn-default" })
-        </div>
-    }
-</div>
+                    switch (property.PropertyName)
+                    {
+                        case "ProductID":
+                        case "ImageData":
+                        case "ImageMimeType":
+                            break;
+                        default:
+                            <div class="form-group">
+                                <label>@(property.DisplayName ?? property.PropertyName)</label>
+                                @if (property.PropertyName == "Description")
+                                {
+                                    //textarea
+                                    @Html.TextArea(property.PropertyName, null, new { @class = "form-control", rows = 5 })
+                                }
+                                else
+                                {
+                                    //input
+                                    @Html.TextBox(property.PropertyName, null, new { @class = "form-control" })
+                                }
+
+                                @Html.ValidationMessage(property.PropertyName)
+                            </div>
+                            break;
+                    }
+                }
+
+                  <div class="form-group">
+                <div style="position:relative;">
+                    <label>Image</label>
+                    <a class='btn' href='javascript:;'>
+                        Choose File...
+                        <input type="file" name="Image" size="40"
+                               style="position:absolute;z-index:2;top:0;
+                            left:0;filter: alpha(opacity=0); opacity:0;
+                            background-color:transparent;color:transparent;"
+                               onchange='$("#upload-file-info").html($(this).val());'>
+                    </a>
+                    <span class='label label-info' id="upload-file-info"></span>
+                </div>
+                @if (Model.ImageData == null)
+                {
+                    <div class="form-control-static">No Image</div>
+                }
+                else
+                {
+                    <img class="img-thumbnail" width="150" height="150"
+                         src="@Url.Action("GetImage", "Product",
+                        new { Model.ProductID })" />
+                }
+            </div>
+            </div>
+
+          
+
+
+            //generates the view after inspecting the model type - Product class
+            //@Html.EditorForModel()
+
+            <div class="panel-footer">
+                <input type="submit" value="Save" class="btn btn-primary" />
+                @Html.ActionLink("Cancel and return to List", "Index", null, new { @class = "btn btn-default" })
+            </div>
+        }
+    </div>
 
 
 @*This is generated in the browser*@
 @*<div class="panel-body">
-    <input data-val="true" data-val-number="The field ProductID must be a number." data-val-required="The ProductID field is required." id="ProductID" name="ProductID" type="hidden" value="3">
+        <input data-val="true" data-val-number="The field ProductID must be a number." data-val-required="The ProductID field is required." id="ProductID" name="ProductID" type="hidden" value="3">
 
-    <div class="form-group">
-        <label>Name</label>
-        <input class="form-control" id="Name" name="Name" type="text" value="Lifejacket">
-    </div>
-    <div class="form-group">
-        <label>Description</label>
-<textarea class="form-control" cols="20" id="Description" name="Description" rows="5">Protective and fashionable</textarea>
-    </div>
-    <div class="form-group">
-        <label>Price</label>
-        <input class="form-control" data-val="true" data-val-number="The field Price must be a number." data-val-required="The Price field is required." id="Price" name="Price" type="text" value="48.95">
-    </div>
-    <div class="form-group">
-        <label>Category</label>
-        <input class="form-control" id="Category" name="Category" type="text" value="Watersports">
-    </div>
-</div>*@
+        <div class="form-group">
+            <label>Name</label>
+            <input class="form-control" id="Name" name="Name" type="text" value="Lifejacket">
+        </div>
+        <div class="form-group">
+            <label>Description</label>
+    <textarea class="form-control" cols="20" id="Description" name="Description" rows="5">Protective and fashionable</textarea>
+        </div>
+        <div class="form-group">
+            <label>Price</label>
+            <input class="form-control" data-val="true" data-val-number="The field Price must be a number." data-val-required="The Price field is required." id="Price" name="Price" type="text" value="48.95">
+        </div>
+        <div class="form-group">
+            <label>Category</label>
+            <input class="form-control" id="Category" name="Category" type="text" value="Watersports">
+        </div>
+    </div>*@
