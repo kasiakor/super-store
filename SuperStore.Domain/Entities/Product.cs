@@ -20,5 +20,12 @@ namespace SuperStore.Domain.Entities
 
         [Required(ErrorMessage = "Please enter the product category")]
         public string Category { get; set; }
+
+        //Image.ImageData Property
+        //Byte[] A byte array containing the image in binary format
+        public byte[] ImageData { get; set; }
+
+        //mime types: image/bmp, image/jpeg, image/x-png; image/png, or image/gif
+        public string ImageMimeType { get; set; }
     }
 }
