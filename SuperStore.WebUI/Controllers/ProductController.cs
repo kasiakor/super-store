@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using System.Web.Mvc;
 using SuperStore.Domain.Abstract;
+using SuperStore.Domain.Entities;
 using SuperStore.WebUI.Models;
 
 namespace SuperStore.WebUI.Controllers
@@ -33,6 +34,21 @@ namespace SuperStore.WebUI.Controllers
             };
             //sequence of product objects passed to the view
             return View(model);
+        }
+
+        public FileContentResult GetImage(int productId)
+        {
+            Product product = repository.Products
+                .FirstOrDefault(p => p.ProductID == productId);
+            if(product != null)
+            {
+                //creates instance when we return file to the client browser
+                return File(product.ImageData, product.ImageMimeType);
+            }
+            else
+            {
+                return null;
+            }
         }
     }
 }
