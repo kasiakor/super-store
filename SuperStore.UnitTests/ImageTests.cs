@@ -64,5 +64,27 @@ namespace SuperStore.UnitTests
             //Test
 
         }
+
+        [TestMethod]
+        public void Cannot_Retrieve_Image_Data_For_Invalid_ID()
+        { 
+            // Arrange
+            //mock repository
+            Mock<IProductRepository> mock = new Mock<IProductRepository>();
+            mock.Setup(m => m.Products).Returns(new Product[] {
+            new Product {ProductID = 1, Name = " P1"},
+            new Product {ProductID = 2, Name = "P2"}
+            }.AsQueryable());
+
+            // Arrange
+            ProductController target = new ProductController(mock.Object);
+
+            //Act call GetImage action
+            //public FileContentResult GetImage(int productId)
+            ActionResult result = target.GetImage(3);
+
+            //Assert
+            Assert.IsNull(result);
+        }
     }
 }
