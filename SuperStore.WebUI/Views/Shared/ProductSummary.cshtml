@@ -1,6 +1,10 @@
 ﻿@model SuperStore.Domain.Entities.Product
 
     <div class="well">
+        @if (Model.ImageData != null)
+        {
+            <img class="img-thumbnail" width="75" height="75" src="@Url.Action("GetImage", "Product", new { Model.ProductID })" />
+        }
         <h3>
             <strong>@Model.Name</strong>
             <span class="pull-right label label-primary">@Model.Price.ToString("c")</span>
@@ -8,17 +12,17 @@
         @*Values of hidden inputs but will be included in the form while posting to AddToCart action and model binding will assign them to productId and returnUrl arguments accordingly.*@
         @using (Html.BeginForm("AddToCart", "Cart"))
         {
-    <div class="pull-right">
-        @*allows the helper to derive the appropriate "name" attribute for the form-input control based on the property you specify in the lambda*@
-        @*<input type="hidden" name="ProductID" value="1" />*@
-        @Html.HiddenFor(x => x.ProductID)
+            <div class="pull-right">
+                @*allows the helper to derive the appropriate "name" attribute for the form-input control based on the property you specify in the lambda*@
+                @*<input type="hidden" name="ProductID" value="1" />*@
+                @Html.HiddenFor(x => x.ProductID)
 
-        @*<input type="hidden" name="returnUrl" value="/" />*@
-        @*Request.Url.PathAndQuery property returns absolute path of request with query parameters.
-        if you came to AddToCart view from Index view then returnUrl will be "/", because the Index view is a root of the webapp*@
-        @Html.Hidden("returnUrl", Request.Url.PathAndQuery)
-        <input type="submit" class="btn btn-success" value="Add to cart" />
-    </div>
+                @*<input type="hidden" name="returnUrl" value="/" />*@
+                @*Request.Url.PathAndQuery property returns absolute path of request with query parameters.
+                if you came to AddToCart view from Index view then returnUrl will be "/", because the Index view is a root of the webapp*@
+                @Html.Hidden("returnUrl", Request.Url.PathAndQuery)
+                <input type="submit" class="btn btn-success" value="Add to cart" />
+            </div>
         }
         <span class="lead"> @Model.Description</span>
     </div>
