@@ -38,6 +38,7 @@ namespace SuperStore.WebUI.Controllers
 
         public FileContentResult GetImage(int productId)
         {
+            //tries to find the product that matches the id specified in the parameter
             Product product = repository.Products
                 .FirstOrDefault(p => p.ProductID == productId);
             if(product != null)

@@ -93,6 +93,7 @@
     <Compile Include="CartTests.cs" />
     <Compile Include="AdminTest.cs" />
     <Compile Include="AdminSecurityTest.cs" />
+    <Compile Include="ImageTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
